@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:beamer/beamer.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +8,16 @@ import 'package:marketplace/marketplace.dart';
 import 'package:checkout/checkout.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
-  runApp(MyApp());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://ec582149d085436c8be4f266715203ba@o401245.ingest.sentry.io/5751256';
+    },
+    appRunner: () => runApp(MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
